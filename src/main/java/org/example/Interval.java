@@ -21,9 +21,9 @@ public enum Interval {
         this.semitones = semitones;
     }
 
-    /*public int getSemitones() {
+    public int getSemitones() {
         return semitones;
-    }*/
+    }
 
     @Override
     public String toString() {
