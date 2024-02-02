@@ -11,7 +11,9 @@ public enum Interval {
     TRITONE_DIM5(6, -6),
     PERFECT_FIFTH(7, 1),
     MINOR_SIXTH(8, -4),
+    AUGMENTED_FIFTH(8, 8), // Special interval needs to be written after basic one in order to have lower priority
     MAJOR_SIXTH(9, 3),
+    DIMINISHED_SEVENTH(9, -9),
     MINOR_SEVENTH(10, -2),
     MAJOR_SEVENTH(11, 5),
     OCTAVE(12, 0);

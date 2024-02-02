@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.List;
+
 public enum Note {
     C_DOUBLE_FLAT(NoteName.C, Accidental.DOUBLE_FLAT),
     C_FLAT(NoteName.C, Accidental.FLAT),
@@ -14,6 +16,7 @@ public enum Note {
     D_DOUBLE_SHARP(NoteName.D, Accidental.DOUBLE_SHARP),
 
 
+    E_TRIPLE_FLAT(NoteName.E, Accidental.TRIPLE_FLAT),
     E_DOUBLE_FLAT(NoteName.E, Accidental.DOUBLE_FLAT),
     E_FLAT(NoteName.E, Accidental.FLAT),
     E(NoteName.E, Accidental.NATURAL),
@@ -25,6 +28,8 @@ public enum Note {
     F(NoteName.F, Accidental.NATURAL),
     F_SHARP(NoteName.F, Accidental.SHARP),
     F_DOUBLE_SHARP(NoteName.F, Accidental.DOUBLE_SHARP),
+    F_TRIPLE_SHARP(NoteName.F, Accidental.TRIPLE_SHARP),
+
 
     G_DOUBLE_FLAT(NoteName.G, Accidental.DOUBLE_FLAT),
     G_FLAT(NoteName.G, Accidental.FLAT),
@@ -38,11 +43,14 @@ public enum Note {
     A_SHARP(NoteName.A, Accidental.SHARP),
     A_DOUBLE_SHARP(NoteName.A, Accidental.DOUBLE_SHARP),
 
+    B_TRIPLE_FLAT(NoteName.B, Accidental.TRIPLE_FLAT),
     B_DOUBLE_FLAT(NoteName.B, Accidental.DOUBLE_FLAT),
     B_FLAT(NoteName.B, Accidental.FLAT),
     B(NoteName.B, Accidental.NATURAL),
     B_SHARP(NoteName.B, Accidental.SHARP),
-    B_DOUBLE_SHARP(NoteName.B, Accidental.DOUBLE_SHARP);
+    B_DOUBLE_SHARP(NoteName.B, Accidental.DOUBLE_SHARP),
+    B_TRIPLE_SHARP(NoteName.B, Accidental.TRIPLE_SHARP);
+
 
     private final NoteName name;
     private final Accidental accidental;
@@ -62,7 +70,7 @@ public enum Note {
     }
 
     public enum Accidental {
-        FLAT, SHARP, NATURAL, DOUBLE_SHARP, DOUBLE_FLAT;
+        FLAT, SHARP, NATURAL, DOUBLE_SHARP, DOUBLE_FLAT, TRIPLE_SHARP, TRIPLE_FLAT;
 
         @Override
         public String toString() {
@@ -72,8 +80,23 @@ public enum Note {
                 case NATURAL -> "";
                 case DOUBLE_SHARP -> "x";
                 case DOUBLE_FLAT -> "bb";
+                case TRIPLE_SHARP -> "#x";
+                case TRIPLE_FLAT -> "bbb";
             };
         }
     }
+
+    public static final List<Note> ROOTS = List.of(
+            Note.F_FLAT, Note.C_FLAT, Note.G_FLAT, Note.D_FLAT, Note.A_FLAT, Note.E_FLAT, Note.B_FLAT, Note.F,
+            Note.C, Note.G, Note.D, Note.A, Note.E, Note.B, Note.F_SHARP, Note.C_SHARP,
+            Note.G_SHARP, Note.D_SHARP, Note.A_SHARP, Note.E_SHARP, Note.B_SHARP);
+    public static final List<Note> INTERVALS = List.of(
+            Note.E_TRIPLE_FLAT, Note.B_TRIPLE_FLAT, Note.F_DOUBLE_FLAT,
+            Note.C_DOUBLE_FLAT, Note.G_DOUBLE_FLAT, Note.D_DOUBLE_FLAT, Note.A_DOUBLE_FLAT, Note.E_DOUBLE_FLAT, Note.B_DOUBLE_FLAT,
+            Note.F_FLAT, Note.C_FLAT, Note.G_FLAT, Note.D_FLAT, Note.A_FLAT, Note.E_FLAT, Note.B_FLAT, Note.F,
+            Note.C, Note.G, Note.D, Note.A, Note.E, Note.B, Note.F_SHARP, Note.C_SHARP,
+            Note.G_SHARP, Note.D_SHARP, Note.A_SHARP, Note.E_SHARP, Note.B_SHARP,
+            Note.F_DOUBLE_SHARP, Note.C_DOUBLE_SHARP, Note.G_DOUBLE_SHARP, Note.D_DOUBLE_SHARP, Note.A_DOUBLE_SHARP, Note.E_DOUBLE_SHARP,
+            Note.B_TRIPLE_SHARP, Note.F_TRIPLE_SHARP);
 }
 
