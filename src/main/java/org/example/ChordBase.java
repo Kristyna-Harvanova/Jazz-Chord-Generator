@@ -10,12 +10,61 @@ public class ChordBase {
     protected ScaleType scaleType;
     protected List<Note> notesList;
 
+    public ChordBase(Note rootNote, Tonality tonality) {
+        this.rootNote = rootNote;
+        this.tonality = tonality;
+        this.notesList = new ArrayList<>();
+
+        this.addNote(rootNote);
+    }
+
     public ChordBase(Note rootNote, Tonality tonality, ScaleType scaleType) {
         this.rootNote = rootNote;
         this.tonality = tonality;
         this.scaleType = scaleType;
         this.notesList = new ArrayList<>();
+
+        this.addNote(rootNote);
     }
+
+    protected static final List<Note> ROOTS = List.of(
+            Note.F_FLAT, Note.C_FLAT, Note.G_FLAT, Note.D_FLAT, Note.A_FLAT, Note.E_FLAT, Note.B_FLAT, Note.F,
+            Note.C, Note.G, Note.D, Note.A, Note.E, Note.B, Note.F_SHARP, Note.C_SHARP,
+            Note.G_SHARP, Note.D_SHARP, Note.A_SHARP, Note.E_SHARP, Note.B_SHARP);
+    protected static final List<Note> INTERVALS = List.of(
+            Note.C_DOUBLE_FLAT, Note.G_DOUBLE_FLAT, Note.D_DOUBLE_FLAT, Note.A_DOUBLE_FLAT, Note.E_DOUBLE_FLAT, Note.B_DOUBLE_FLAT,
+            Note.F_FLAT, Note.C_FLAT, Note.G_FLAT, Note.D_FLAT, Note.A_FLAT, Note.E_FLAT, Note.B_FLAT, Note.F,
+            Note.C, Note.G, Note.D, Note.A, Note.E, Note.B, Note.F_SHARP, Note.C_SHARP,
+            Note.G_SHARP, Note.D_SHARP, Note.A_SHARP, Note.E_SHARP, Note.B_SHARP,
+            Note.F_DOUBLE_SHARP, Note.C_DOUBLE_SHARP, Note.G_DOUBLE_SHARP, Note.D_DOUBLE_SHARP, Note.A_DOUBLE_SHARP, Note.E_DOUBLE_SHARP);
+
+    protected void addNote(Note note) {
+        notesList.add(note);
+    }
+
+    protected void addInterval(Interval interval) {
+        if (!ROOTS.contains(rootNote)) { return; } //TODO: osetrit, ve kterych pripadech budu mit doubleAccidental root. Mozna nikde -> pak zrusit.
+        int rootIndex = INTERVALS.indexOf(rootNote);   // TODO: nahodne generovat z "ROOTS". Pokud bude feature, ze si uzivatel sam zada root, musi byt z ROOTS - kontrolovat.
+        // TODO: Neprijimat jako root double flat/sharp, ale vlastne slo by. staci jen rozsirit nasi radu a pridat tony triple falt atd. Je to vubec pot5eba a bude to pekne?
+        int shift = interval.getShift();
+        Note note = INTERVALS.get(rootIndex + shift);
+        addNote(note);
+    }
+
+    protected void addThird() {
+        Interval interval = (tonality == Tonality.MAJOR) ? Interval.MAJOR_THIRD : Interval.MINOR_THIRD;
+        addInterval(interval);
+    }
+
+
+
+
+
+
+
+
+
+
 
     //protected static final Note[] NAT_ROOTS_SHARPS = new Note[]{ Note.C, Note.G, Note.D, Note.A, Note.E, Note.B };
     //protected static final Note[] SHARPS_FOR_ROOTS_NAT = new Note[]{ Note.C, Note.C_SHARP, Note.D, Note.D_SHARP, Note.E, Note.F, Note.F_SHARP, Note.G, Note.G_SHARP, Note.A, Note.A_SHARP, Note.B };
@@ -29,11 +78,6 @@ public class ChordBase {
     protected static final List<Note> FLATS_FOR_ROOTS_NAT = List.of(Note.C, Note.D_FLAT, Note.D, Note.E_FLAT, Note.E, Note.F, Note.G_FLAT, Note.G, Note.A_FLAT, Note.A, Note.B_FLAT, Note.B);
     protected static final List<Note> FLATS_FOR_ROOTS_FLA = List.of(Note.D_DOUBLE_FLAT, Note.D_FLAT, Note.E_DOUBLE_FLAT, Note.E_FLAT, Note.F_FLAT, Note.G_DOUBLE_FLAT, Note.G_FLAT, Note.A_DOUBLE_FLAT, Note.A_FLAT, Note.B_DOUBLE_FLAT, Note.B_FLAT, Note.C_FLAT);
 
-
-
-    protected void addNote(Note note) {
-        notesList.add(note);
-    }
 
     protected void addThirdx() {
         /*Note[] rootNat = new Note[]{ Note.C, Note.G, Note.D, Note.A, Note.E, Note.B };
@@ -64,14 +108,14 @@ public class ChordBase {
 
         if (NAT_ROOTS_SHARPS.contains(rootNote)) {
             int rootIndex = SHARPS_FOR_ROOTS_NAT.indexOf(rootNote);
-            Interval interval = (tonality == Tonality.MAJOR) ? org.example.Interval.MAJOR_THIRD : org.example.Interval.MINOR_THIRD;
+            Interval interval = (tonality == Tonality.MAJOR) ? Interval.MAJOR_THIRD : Interval.MINOR_THIRD;
             Note third = SHARPS_FOR_ROOTS_NAT.get((rootIndex + interval.getSemitones()) % SHARPS_FOR_ROOTS_NAT.size());
 
             addNote(third);
         }
     }
 
-    protected void addThird() {
+    protected void addThirdy() {
         List<Note> notes = getNotesList(rootNote);
         if (notes != null) {    //TODO: az se nebude v getNotesList vracet null, tak zrusit.
             int rootIndex = notes.indexOf(rootNote);
@@ -97,6 +141,16 @@ public class ChordBase {
         }
     }
 
+
+
+
+
+
+
+
+
+
+
     public String listAllNotes() {
         StringBuilder sb = new StringBuilder();
         for (Note note : notesList) {
@@ -108,6 +162,6 @@ public class ChordBase {
 
     @Override
     public String toString() {
-        return rootNote.toString() + tonality.toString() + notesList.toString();
+        return rootNote.toString() + tonality.toString();
     }
 }

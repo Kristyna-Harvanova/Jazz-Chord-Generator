@@ -9,7 +9,7 @@ public enum ScaleType {
     AEOLIAN(5),
     LOCRIAN(6);
     
-    private final Interval[] intervals;
+    private final Interval[] intervalsInBetween;
 
     ScaleType(int rotation) {
         Interval[] MAJOR_SCALE = {
@@ -21,7 +21,7 @@ public enum ScaleType {
                 Interval.MAJOR_SECOND,
                 Interval.MINOR_SECOND
         };
-        this.intervals = rotateIntervals(MAJOR_SCALE, rotation);
+        this.intervalsInBetween = rotateIntervals(MAJOR_SCALE, rotation);
     }
 
     private static Interval[] rotateIntervals(Interval[] intervals, int rotation) {
@@ -31,6 +31,32 @@ public enum ScaleType {
         }
         return rotated;
     }
+
+    public Interval[] getIntervalsFromRoot() {
+        Interval[] result = new Interval[7];
+        int semitonesFromRoot = 0;
+        int i = 0;
+        for (Interval interval : intervalsInBetween) {
+            semitonesFromRoot += interval.getSemitones();
+
+            if (semitonesFromRoot == Interval.TRITONE_AUG4.getSemitones() && i == 2) {
+                result[i++] = Interval.TRITONE_AUG4;
+                continue;
+            } else if (semitonesFromRoot == Interval.TRITONE_DIM5.getSemitones() && i == 3) {
+                result[i++] = Interval.TRITONE_DIM5;
+                continue;
+            }
+            result[i++] = Interval.fromSemitones(semitonesFromRoot);
+        }
+        return result;
+    }
+
+
+
+
+
+
+
 
     /*public Interval[] getIntervals() {
         return intervals;
