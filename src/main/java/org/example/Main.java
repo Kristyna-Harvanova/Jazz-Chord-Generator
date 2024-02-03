@@ -1,7 +1,17 @@
 package org.example;
 
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
+        /*List<IChord> randomChords = ChordGenerator.generateRandomChords(5); // Generate 5 random chords
+
+        for (IChord chord : randomChords) {
+            System.out.println(chord.getName());
+            System.out.println(chord.getNotes());
+        }*/
+
+
         /*Note myNote = Note.C_FLAT;
         Note n = Note.C;
         System.out.println(myNote); // Outputs C#
@@ -10,7 +20,7 @@ public class Main {
         ChordBase c = new ChordBase(Note.E_FLAT, Tonality.MINOR, ScaleType.IONIAN);
         System.out.println(c);*/
 
-        ChordBase c = new ChordBase(Note.B, Tonality.MAJOR, ScaleType.IONIAN);
+       /* ChordBase c = new ChordBase(Note.B, Tonality.MAJOR, ScaleType.IONIAN);
         c.addThird();
         System.out.println(c);
 
@@ -95,7 +105,7 @@ public class Main {
 
         Scale scale7 = new Scale(Note.C, ScaleType.LOCRIAN);
         scale7.addNotes();
-        System.out.println("Scale:" + scale7.notesList);
+        System.out.println("Scale:" + scale7.notesList);*/
 
     }
 }

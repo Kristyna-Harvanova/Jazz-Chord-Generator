@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ChordBase {
+public class ChordBase  implements IChord {
     protected Note rootNote;
     protected Tonality tonality;
-    protected ScaleType scaleType;
+    protected ScaleType scaleType;  //TODO: is here necessary?
     protected List<Note> notesList;
 
     public ChordBase(Note rootNote, Tonality tonality) {
@@ -158,5 +158,15 @@ public class ChordBase {
     @Override
     public String toString() {
         return rootNote.toString() + tonality.toString();
+    }
+
+    @Override
+    public String getName() {
+        return toString();
+    }
+
+    @Override
+    public List<Note> getNotes() {
+        return notesList;
     }
 }
