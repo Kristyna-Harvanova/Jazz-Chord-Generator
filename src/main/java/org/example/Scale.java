@@ -14,6 +14,7 @@ public class Scale {
         this.notesList = new ArrayList<>();
 
         this.addNote(rootNote);
+        this.addNotes();
     }
 
     protected void addNote(Note note) {
@@ -21,9 +22,7 @@ public class Scale {
     }
 
     protected void addInterval(Interval interval) {
-        if (!Note.ROOTS.contains(rootNote)) { return; } //TODO: osetrit, ve kterych pripadech budu mit doubleAccidental root. Mozna nikde -> pak zrusit.
         int rootIndex = Note.INTERVALS.indexOf(rootNote);   // TODO: nahodne generovat z "ROOTS". Pokud bude feature, ze si uzivatel sam zada root, musi byt z ROOTS - kontrolovat.
-        // TODO: Neprijimat jako root double flat/sharp, ale vlastne slo by. staci jen rozsirit nasi radu a pridat tony triple falt atd. Je to vubec pot5eba a bude to pekne?
         int shift = interval.getShift();
         Note note = Note.INTERVALS.get(rootIndex + shift);
         addNote(note);
@@ -44,5 +43,13 @@ public class Scale {
         }
         sb.setLength(sb.length() - 2); // Remove trailing comma and space
         return sb.toString();
+    }
+
+    public String getName() {
+        return toString();
+    }
+
+    public List<Note> getNotes() {
+        return notesList;
     }
 }

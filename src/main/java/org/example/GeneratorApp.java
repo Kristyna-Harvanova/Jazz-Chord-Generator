@@ -3,7 +3,7 @@ package org.example;
 import java.util.Scanner;
 import java.util.List;
 
-public class ChordGeneratorApp {
+public class GeneratorApp {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -53,35 +53,42 @@ public class ChordGeneratorApp {
     }
 
     private static void exerciseChords() {
-        displayOptions();
+        displayOptionsForChords();
         int option = getOptionNumber();
 
-        System.out.println("How many chords do you want to generate?");
-        int numberOfChords = getNumberOfChords();
+        List<IChord> generatedChords;
+        if (option == 6) {
+            System.out.println("Insert a root note (eg.: 'D', 'C#' or 'Bb') you want to practice or press 'R' for a random root.");
+            String root = getRoot();
+            generatedChords = ChordGenerator.generateChordsForRoot(root);
+        } else {
+            System.out.println("How many chords do you want to generate?");
+            int numberOfChords = getNumberOfChordsOrScales();
+            generatedChords = ChordGenerator.generateRandomChords(numberOfChords, option);
+        }
 
-        List<IChord> randomChords = ChordGenerator.generateRandomChords(numberOfChords, option);
-
-        displayChords(randomChords);
+        displayChords(generatedChords);
         waitForHintCommand();
-        displayChordsWithNotes(randomChords);
+        displayChordsWithNotes(generatedChords);
     }
 
-    private static void displayOptions() {
+    private static void displayOptionsForChords() {
         System.out.println("Please choose one of the following training modules by pressing the option number.");
         System.out.println("Option 1:    Easy        - Basic triads.");
         System.out.println("Option 2:    Easy+       - Basic triads and triads with augmented fifth.");
         System.out.println("Option 3:    Medium      - Seventh chords.");
         System.out.println("Option 4:    Medium+     - Seventh chords and diminished seventh chords.");
         System.out.println("Option 5:    Hard        - All chord types.");
+        System.out.println("Option 6:    Special     - All chord types starting from entered or random root.");
     }
 
     private static int getOptionNumber() {
         int option = -1;
-        while (option < 1 || option > 5) {
+        while (option < 1 || option > 6) {
             try {
                 option = scanner.nextInt(); // Attempt to read an integer from the user
-                if (option < 1 || option > 5) {
-                    System.out.println("Please enter one of the following option numbers: '1', '2', '3', '4' or '5'.");
+                if (option < 1 || option > 6) {
+                    System.out.println("Please enter one of the following option numbers: '1', '2', '3', '4', '5' or '6'.");
                 }
             } catch (Exception e) {
                 System.out.println("Invalid input. Please enter a valid option number.");
@@ -91,14 +98,29 @@ public class ChordGeneratorApp {
         return option;
     }
 
-    private static int getNumberOfChords() {
+    private static String getRoot() {
+        String s = scanner.next();
+        while (!"R".equalsIgnoreCase(s) && !IsRoot(s)) {
+            System.out.println("Insert a valid format of a root note (eg.: 'D', 'C#' or 'Bb') or press 'R' for a random root.");
+            s = scanner.next();
+        }
+        return s;
+    }
+
+    private static boolean IsRoot(String s) {
+        Note note = Note.fromString(s);
+        if (note == null) { return false; }
+        return Note.IsRoot(note);
+    }
+
+    private static int getNumberOfChordsOrScales() {
         int numberOfChords = -1; // Initialize with an invalid value to enter the loop
 
         while (numberOfChords <= 0) {
             try {
                 numberOfChords = scanner.nextInt(); // Attempt to read an integer from the user
                 if (numberOfChords <= 0) {
-                    System.out.println("The number of chords cannot be non-positive. Please try again inserting a positive integer.");
+                    System.out.println("The number cannot be non-positive. Please try again inserting a positive integer.");
                 }
             } catch (Exception e) {
                 System.out.println("Invalid input. Please enter a valid positive integer.");
@@ -135,6 +157,64 @@ public class ChordGeneratorApp {
     }
 
     private static void exerciseScales() {
+        displayOptionsForScales();
+        int option = getOptionNumber();
 
+        List<Scale> generatedScales;
+        if (option == 1) {
+            System.out.println("Insert a root note (eg.: 'D', 'C#' or 'Bb') you want to practice or press 'R' for a random root.");
+            String root = getRoot();
+            generatedScales = ScaleGenerator.generateScalesForRoot(root);
+        } else if (option == 2) {
+            System.out.println("Insert a type of a scale (eg.: 'Ionian' or 'Lydian') you want to practice or press 'R' for a random scale type.");
+            String scaleType = getScaleType();
+            generatedScales = ScaleGenerator.generateGivenScaleForAllRoots(scaleType);
+        } else { // if (option == 3) {
+            System.out.println("How many scales do you want to generate?");
+            int numberOfScales = getNumberOfChordsOrScales();
+            generatedScales = ScaleGenerator.generateRandomCScales(numberOfScales);
+
+        }
+
+        displayScales(generatedScales);
+        waitForHintCommand();
+        displayScalesWithNotes(generatedScales);
+    }
+
+    private static void displayOptionsForScales() {
+        System.out.println("Please choose one of the following training modules by pressing the option number.");
+        System.out.println("Option 1:    Root-based  - All types of scales for a given root will be generated.");
+        System.out.println("Option 2:    Type-based  - Chosen scale type will be generated for all possible roots.");
+        System.out.println("Option 3:    Random      - Random scales will be generated.");
+    }
+
+    private static String getScaleType() {
+        String s = scanner.next();
+        while (!"R".equalsIgnoreCase(s) && !IsScaleType(s)) {
+            System.out.println("Insert a type of a scale (eg.: 'Ionian' or 'Lydian') you want to practice or press 'R' for a random scale type.");
+            s = scanner.next();
+        }
+        return s;
+    }
+
+    private static boolean IsScaleType(String s) {
+        ScaleType scaleType = ScaleType.fromString(s);
+        return scaleType != null;
+    }
+
+    private static void displayScales(List<Scale> scales) {
+        int i = 0;
+        for (Scale scale : scales) {
+            System.out.printf("Scale %d:\t%s%n", i++ + 1, scale.getName());
+        }
+        System.out.println();
+    }
+
+    private static void displayScalesWithNotes(List<Scale> scales) {
+        int i = 0;
+        for (Scale scale : scales) {
+            System.out.printf("Scale %d:\t%-8s\t%s%n", i++ + 1, scale.getName(), scale.getNotes());
+        }
+        System.out.println();
     }
 }

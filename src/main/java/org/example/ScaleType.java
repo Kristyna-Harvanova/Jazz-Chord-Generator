@@ -1,5 +1,7 @@
 package org.example;
 
+import java.util.Locale;
+
 public enum ScaleType {
     IONIAN(0),
     DORIAN(1),
@@ -49,6 +51,21 @@ public enum ScaleType {
             result[i++] = Interval.fromSemitones(semitonesFromRoot);
         }
         return result;
+    }
+
+    public static ScaleType fromString(String typeStr) {
+        if (typeStr == null || typeStr.isEmpty()) {
+            throw new IllegalArgumentException("ScaleType string cannot be null or empty.");
+        }
+
+        String formattedTypeStr = typeStr.toUpperCase();
+
+        try {
+            return ScaleType.valueOf(formattedTypeStr);
+        } catch (IllegalArgumentException e) {
+            //throw new IllegalArgumentException("No corresponding ScaleType enum constant for: " + typeStr);
+            return null;
+        }
     }
 
 

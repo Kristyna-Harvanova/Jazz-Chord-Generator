@@ -11,6 +11,15 @@ public class Main {
             System.out.println(chord.getNotes());
         }*/
 
+        List<Scale> randomChords = ScaleGenerator.generateRandomCScales(5); // Generate 5 random chords
+
+        for (Scale chord : randomChords) {
+            System.out.println(chord.rootNote);
+            System.out.println(chord.scaleType);
+            System.out.println(chord.notesList);
+
+        }
+
 
         /*Note myNote = Note.C_FLAT;
         Note n = Note.C;

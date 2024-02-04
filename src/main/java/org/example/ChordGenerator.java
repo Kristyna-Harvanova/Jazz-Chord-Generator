@@ -80,6 +80,26 @@ public class ChordGenerator {
         return new Chord7Diminished5(getRandomNote(), getRandomSeventhDim());
     }
 
+    public static List<IChord> generateChordsForRoot(String r) {
+        List<IChord> chords = new ArrayList<>();
+
+        Note root;
+        if (r.equalsIgnoreCase("R")) { root = getRandomNote(); }
+        else { root = Note.fromString(r); }
+
+        chords.add(new Chord(root, Tonality.MAJOR));
+        chords.add(new Chord(root, Tonality.MINOR));
+        chords.add(new ChordAugmented5(root));
+        chords.add(new ChordSeventh(root, Tonality.MAJOR, Interval.MAJOR_SEVENTH));
+        chords.add(new ChordSeventh(root, Tonality.MAJOR, Interval.MINOR_SEVENTH));
+        chords.add(new ChordSeventh(root, Tonality.MINOR, Interval.MAJOR_SEVENTH));
+        chords.add(new ChordSeventh(root, Tonality.MINOR, Interval.MINOR_SEVENTH));
+        chords.add(new Chord7Diminished5(root, Interval.MAJOR_SEVENTH));
+        chords.add(new Chord7Diminished5(root, Interval.DIMINISHED_SEVENTH));
+
+        return chords;
+    }
+
     private static Note getRandomNote() {
         Note[] notes = Note.ROOTS.toArray(new Note[0]);
         return notes[random.nextInt(notes.length)];

@@ -86,6 +86,24 @@ public enum Note {
         }
     }
 
+    public static Note fromString(String noteStr) {
+        if (noteStr == null || noteStr.isEmpty()) {
+            throw new IllegalArgumentException("Note string cannot be null or empty.");
+        }
+
+        String formattedNoteStr = noteStr;
+        formattedNoteStr = formattedNoteStr.replace("#", "_SHARP");
+        formattedNoteStr = formattedNoteStr.replace("b", "_FLAT");
+        formattedNoteStr = formattedNoteStr.toUpperCase();
+
+        try {
+            return Note.valueOf(formattedNoteStr);
+        } catch (IllegalArgumentException e) {
+            //throw new IllegalArgumentException("No corresponding Note enum constant for: " + noteStr);
+            return null;
+        }
+    }
+
     public static final List<Note> ROOTS = List.of(
             Note.F_FLAT, Note.C_FLAT, Note.G_FLAT, Note.D_FLAT, Note.A_FLAT, Note.E_FLAT, Note.B_FLAT, Note.F,
             Note.C, Note.G, Note.D, Note.A, Note.E, Note.B, Note.F_SHARP, Note.C_SHARP,
@@ -98,5 +116,9 @@ public enum Note {
             Note.G_SHARP, Note.D_SHARP, Note.A_SHARP, Note.E_SHARP, Note.B_SHARP,
             Note.F_DOUBLE_SHARP, Note.C_DOUBLE_SHARP, Note.G_DOUBLE_SHARP, Note.D_DOUBLE_SHARP, Note.A_DOUBLE_SHARP, Note.E_DOUBLE_SHARP,
             Note.B_TRIPLE_SHARP, Note.F_TRIPLE_SHARP);
+
+    public static boolean IsRoot(Note note) {
+        return ROOTS.contains(note);
+    }
 }
 
