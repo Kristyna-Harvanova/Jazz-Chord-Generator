@@ -1,5 +1,9 @@
 package org.example;
 
+/**
+ * Enumerates types of musical scales.
+ * Each scale type is defined by a unique sequence of intervals starting from the root note.
+ */
 public enum ScaleType {
     IONIAN(0),
     DORIAN(1),
@@ -8,9 +12,18 @@ public enum ScaleType {
     MIXOLYDIAN(4),
     AEOLIAN(5),
     LOCRIAN(6);
-    
+
+    /**
+     * The intervals between consecutive notes in the scale, starting from the root note.
+     */
     private final Interval[] intervalsInBetween;
 
+    /**
+     * Constructs a {@code ScaleType} with a specified rotation of the major scale intervals.
+     * This rotation determines the unique sequence of intervals that define the scale type.
+     *
+     * @param rotation The rotation of the major scale intervals to create this scale type.
+     */
     ScaleType(int rotation) {
         Interval[] MAJOR_SCALE = {
                 Interval.MAJOR_SECOND,
@@ -24,6 +37,13 @@ public enum ScaleType {
         this.intervalsInBetween = rotateIntervals(MAJOR_SCALE, rotation);
     }
 
+    /**
+     * Rotates the given array of intervals by a specified amount to create the interval sequence for particular scale type.
+     *
+     * @param intervals The array of intervals to be rotated.
+     * @param rotation The number of positions by which to rotate the array.
+     * @return An array of {@code Interval} objects representing the rotated intervals.
+     */
     private static Interval[] rotateIntervals(Interval[] intervals, int rotation) {
         Interval[] rotated = new Interval[intervals.length];
         for (int i = 0; i < intervals.length; i++) {
@@ -32,6 +52,11 @@ public enum ScaleType {
         return rotated;
     }
 
+    /**
+     * Returns the intervals between consecutive notes in this scale type, starting from the root note.
+     *
+     * @return An array of {@code Interval} objects representing the intervals from the root note.
+     */
     public Interval[] getIntervalsFromRoot() {
         Interval[] result = new Interval[7];
         int semitonesFromRoot = 0;
@@ -51,6 +76,14 @@ public enum ScaleType {
         return result;
     }
 
+    /**
+     * Converts a string representation of a scale type into the corresponding {@code ScaleType} enum constant.
+     * This method allows for flexible input, including varying cases, to match the string representation to an enum constant.
+     *
+     * @param typeStr The string representation of the scale type, such as "Ionian", "Dorian", etc.
+     * @return The corresponding {@code ScaleType} enum constant, or {@code null} if no matching constant is found.
+     * @throws IllegalArgumentException If {@code typeStr} is null or empty, indicating an invalid or unspecified scale type.
+     */
     public static ScaleType fromString(String typeStr) {
         if (typeStr == null || typeStr.isEmpty()) {
             throw new IllegalArgumentException("ScaleType string cannot be null or empty.");

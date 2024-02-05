@@ -4,9 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Provides utility methods for generating random chords. This class can generate both individual chords
+ * and lists of chords based on specified options, allowing for varied chord creation.
+ */
 public class ChordGenerator {
+    /**
+     * A {@code Random} instance for generating random values used in chord generation.
+     */
     private static final Random random = new Random();
 
+    /**
+     * Generates a list of random chords based on the given option.
+     *
+     * @param numberOfChords The number of random chords to generate.
+     * @param option The option that determines the type of the generated chords.
+     * @return A list of {@code IChord} objects, each representing a random chord generated based on the specified option.
+     */
     public static List<IChord> generateRandomChords(int numberOfChords, int option) {
         List<IChord> chords = new ArrayList<>();
         for (int i = 0; i < numberOfChords; i++) {
@@ -15,6 +29,12 @@ public class ChordGenerator {
         return chords;
     }
 
+    /**
+     * Generates a random chord based on the specified option.
+     *
+     * @param option The option that determines the type of the generated chord.
+     * @return An {@code IChord} object representing the generated chord, or {@code null} if the option does not match any defined case.
+     */
     public static IChord generateRandomChordForOption(int option) {
         return switch (option) {
             case 1 -> generateRandomChordForOption1();
@@ -80,6 +100,14 @@ public class ChordGenerator {
         return new Chord7Diminished5(getRandomNote(), getRandomSeventhDim());
     }
 
+    /**
+     * Generates a list of chords for a specified root note or a randomly chosen root note.
+     * This method creates chords that all share the given root note but vary in other characteristics
+     * such as tonality, intervals, or chord types.
+     *
+     * @param r The root note for which the chords will be generated.
+     * @return A list of {@code IChord} objects, each representing a chord with the specified root note.
+     */
     public static List<IChord> generateChordsForRoot(String r) {
         List<IChord> chords = new ArrayList<>();
 
@@ -94,7 +122,7 @@ public class ChordGenerator {
         chords.add(new ChordSeventh(root, Tonality.MAJOR, Interval.MINOR_SEVENTH));
         chords.add(new ChordSeventh(root, Tonality.MINOR, Interval.MAJOR_SEVENTH));
         chords.add(new ChordSeventh(root, Tonality.MINOR, Interval.MINOR_SEVENTH));
-        chords.add(new Chord7Diminished5(root, Interval.MAJOR_SEVENTH));
+        chords.add(new Chord7Diminished5(root, Interval.MINOR_SEVENTH));
         chords.add(new Chord7Diminished5(root, Interval.DIMINISHED_SEVENTH));
 
         return chords;
