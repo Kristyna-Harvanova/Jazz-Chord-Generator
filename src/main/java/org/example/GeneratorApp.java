@@ -21,13 +21,14 @@ public class GeneratorApp {
     }
 
     private static void displayWelcomeMessage() {
-        System.out.println("Welcome to the Jazz Chord Generator!\n" +
-                "\n" +
-                "Dear User,\n" +
-                "We are pleased to introduce you to our Jazz Chord Training Tool, designed for musicians and students with an interest in the sophisticated realm of jazz harmony.\n" +
-                "This tool serves as an educational resource aimed at enhancing your understanding and proficiency in jazz chord structures and providing an insight into scale composition.\n" +
-                "\n" +
-                "Please, press 'S' to start exercising.");
+        System.out.println("""
+                Welcome to the Jazz Chord Generator!
+
+                Dear User,
+                We are pleased to introduce you to our Jazz Chord Training Tool, designed for musicians and students with an interest in the sophisticated realm of jazz harmony.
+                This tool serves as an educational resource aimed at enhancing your understanding and proficiency in jazz chord structures and providing an insight into scale composition.
+
+                Please, press 'S' to start exercising.""");
     }
 
     private static void waitForStartCommand() {
@@ -39,10 +40,12 @@ public class GeneratorApp {
     }
 
     private static String getUserChoice() {
-        System.out.println("If you want to start exercising jazz chords, press 'C'.\n" +
-                "If you want to start exercising scales, press 'S'.\n" +
-                "\n" +
-                "To exit the application, press 'E'");
+        System.out.println("""
+                If you want to start exercising jazz chords, press 'C'.
+                If you want to start exercising scales, press 'S'.
+
+                To exit the application, press 'E'""");
+
         String choice = scanner.next();
         while (!"S".equalsIgnoreCase(choice) && !"C".equalsIgnoreCase(choice) && !"E".equalsIgnoreCase(choice)) {
             System.out.println("Please, press 'C' for chords or 'S' for scales.\n" +
@@ -172,7 +175,7 @@ public class GeneratorApp {
         } else { // if (option == 3) {
             System.out.println("How many scales do you want to generate?");
             int numberOfScales = getNumberOfChordsOrScales();
-            generatedScales = ScaleGenerator.generateRandomCScales(numberOfScales);
+            generatedScales = ScaleGenerator.generateRandomScales(numberOfScales);
 
         }
 
@@ -213,7 +216,7 @@ public class GeneratorApp {
     private static void displayScalesWithNotes(List<Scale> scales) {
         int i = 0;
         for (Scale scale : scales) {
-            System.out.printf("Scale %d:\t%-8s\t%s%n", i++ + 1, scale.getName(), scale.getNotes());
+            System.out.printf("Scale %d:\t%-14s\t%s%n", i++ + 1, scale.getName(), scale.getNotes());
         }
         System.out.println();
     }

@@ -7,7 +7,7 @@ public enum Interval {
     MINOR_THIRD(3, -3),
     MAJOR_THIRD(4, 4),
     PERFECT_FOURTH(5, -1),
-    TRITONE_AUG4(6, 6), // Also known as augmented fourth or diminished fifth // TODO: or +6... do i need triton in usage? meybe in dim? +6 Fis or -6 Ges... i need for scales
+    TRITONE_AUG4(6, 6), // Also known as augmented fourth or diminished fifth
     TRITONE_DIM5(6, -6),
     PERFECT_FIFTH(7, 1),
     MINOR_SIXTH(8, -4),
@@ -19,7 +19,7 @@ public enum Interval {
     OCTAVE(12, 0);
 
     private final int semitones;
-    private int shiftOn45Circle;
+    private final int shiftOn45Circle;
 
     Interval(int semitones, int shiftOn45Circle) {
         this.semitones = semitones;

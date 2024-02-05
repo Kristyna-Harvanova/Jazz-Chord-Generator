@@ -9,6 +9,10 @@ public class Scale {
     protected List<Note> notesList;
 
     public Scale(Note rootNote, ScaleType scaleType) {
+        if (!Note.ROOTS.contains(rootNote)) {
+            throw new IllegalArgumentException("Invalid root note: " + rootNote + ". Allowed roots are C, D, E, F, G, A and B with accidentals #, b or None.");
+        }
+
         this.rootNote = rootNote;
         this.scaleType = scaleType;
         this.notesList = new ArrayList<>();
@@ -22,7 +26,7 @@ public class Scale {
     }
 
     protected void addInterval(Interval interval) {
-        int rootIndex = Note.INTERVALS.indexOf(rootNote);   // TODO: nahodne generovat z "ROOTS". Pokud bude feature, ze si uzivatel sam zada root, musi byt z ROOTS - kontrolovat.
+        int rootIndex = Note.INTERVALS.indexOf(rootNote);
         int shift = interval.getShift();
         Note note = Note.INTERVALS.get(rootIndex + shift);
         addNote(note);
@@ -45,9 +49,7 @@ public class Scale {
         return sb.toString();
     }
 
-    public String getName() {
-        return toString();
-    }
+    public String getName() { return rootNote + " " + scaleType; }
 
     public List<Note> getNotes() {
         return notesList;

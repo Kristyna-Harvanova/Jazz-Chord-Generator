@@ -7,7 +7,7 @@ import java.util.Random;
 public class ScaleGenerator {
     private static final Random random = new Random();
 
-    public static List<Scale> generateRandomCScales(int numberOfScales) {
+    public static List<Scale> generateRandomScales(int numberOfScales) {
         List<Scale> scales = new ArrayList<>();
         for (int i = 0; i < numberOfScales; i++) {
             scales.add(createScale());

@@ -66,7 +66,7 @@ public class ChordBaseTest {
 
     @Test
     public void AddAllBasicTest() {
-        ChordBase chord = new ChordBase(Note.C, Tonality.MAJOR, ScaleType.IONIAN);
+        ChordBase chord = new ChordBase(Note.C, Tonality.MAJOR);
         chord.addInterval(Interval.PERFECT_FIFTH);
         chord.addInterval(Interval.MAJOR_SEVENTH);
         chord.addInterval(Interval.MAJOR_SECOND);

@@ -1,11 +1,20 @@
 package org.example;
 
+import java.util.EnumSet;
+
 public class Chord7Diminished5 extends ChordBase {
     protected Interval fifth = Interval.TRITONE_DIM5;
-    protected Interval seventh; //TODO: omezit, aby nemohlo byt MAJOR_SEVENTH
+    protected Interval seventh;
+    private static final EnumSet<Interval> ALLOWED_SEVENTHS = EnumSet.of(Interval.MINOR_SEVENTH, Interval.DIMINISHED_SEVENTH);
+
 
     public Chord7Diminished5(Note rootNote, Interval seventh) {
         super(rootNote, Tonality.MINOR);
+
+        if (!ALLOWED_SEVENTHS.contains(seventh)) {
+            throw new IllegalArgumentException("Invalid seventh interval: " + seventh + ". Allowed intervals are MINOR_SEVENTH and DIMINISHED_SEVENTH.");
+        }
+
         this.seventh = seventh;
         addFifth();
         addSeventh();

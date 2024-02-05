@@ -1,7 +1,5 @@
 package org.example;
 
-import java.util.Locale;
-
 public enum ScaleType {
     IONIAN(0),
     DORIAN(1),
@@ -67,26 +65,5 @@ public enum ScaleType {
             return null;
         }
     }
-
-
-
-
-
-
-
-
-    /*public Interval[] getIntervals() {
-        return intervals;
-    }*/
-
-    /*@Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder(this.name()).append(": ");
-        for (Interval interval : intervals) {
-            sb.append(interval.name()).append(", ");
-        }
-        sb.setLength(sb.length() - 2); // Remove trailing comma and space
-        return sb.toString();
-    }*/
 }
 
